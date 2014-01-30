@@ -154,7 +154,7 @@ var Markup = function() {
           }
           args.push(parseParagraph(string.substring(start, i)));
           i += 1;
-        } else if (e = /^\s*(\S+)\s*/.exec(sub)) {
+        } else if (e = /^\s*([^\s{}]+)\s*/.exec(sub)) {
           args.push(htmle(e[1]));
           i += e[0].length;
         } else {
