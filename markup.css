@@ -1,0 +1,33 @@
+.markup-image {
+  max-width: 100%;
+  vertical-align: text-bottom;
+}
+.markup-error {
+  color: #f00;
+}
+.markup-email {
+  display: none;
+}
+
+.markup-emoticon {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  color: transparent;
+  overflow: hidden;
+  line-height: 1;
+  background-size: 16px 16px;
+  vertical-align: text-bottom;
+}
+.markup-emoticon.smile {background-image: url(emoticon/smile.svg)}
+.markup-emoticon.wink {background-image: url(emoticon/wink.svg)}
+.markup-emoticon.wide-eyed {background-image: url(emoticon/wide-eyed.svg)}
+.markup-emoticon.big-smile {background-image: url(emoticon/big-smile.svg)}
+.markup-emoticon.slant {background-image: url(emoticon/slant.svg)}
+.markup-emoticon.tongue {background-image: url(emoticon/tongue.svg)}
+.markup-emoticon.neutral {background-image: url(emoticon/neutral.svg)}
+.markup-emoticon.frown {background-image: url(emoticon/frown.svg)}
+.markup-emoticon.cry {background-image: url(emoticon/cry.svg)}
+.markup-emoticon.confused {background-image: url(emoticon/confused.svg)}
+.markup-emoticon.big-frown {background-image: url(emoticon/big-frown.svg)}
+.markup-emoticon.heart {background-image: url(emoticon/heart.svg)}
