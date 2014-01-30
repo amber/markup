@@ -19,8 +19,8 @@ Returns a translated version of the string `key`. By default, this does nothing,
 
 * `Missing reference "%"`
 
-### Markup.templates[<name>]
+### Markup.templates[<var>name</var>]
 
-Templates follow the syntax `{{ template-name <arg1> <arg2> <arg3> }}`. Arguments can be bare words, single-quoted strings, pipe-quoted paragraphs, nestable bracket-quoted paragraphs, or other templates. The template function is called with the Markup context as its first argument, followed by any template arguments.
+Templates follow the syntax <code>{{ template-name <var>arg1</var> <var>arg2</var> <var>arg3</var> }}</code>. Arguments can be bare words, single-quoted strings, pipe-quoted paragraphs, nestable bracket-quoted paragraphs, or other templates. The template function is called with the Markup context as its first argument, followed by any template arguments.
 
-Markup provides the `{{ echo <string> }}` and `{{ title <p> }}` templates by default.
+Markup provides the <code>{{ echo <var>string</var> }}</code> and <code>{{ title <var>p</var> }}</code> templates by default.
