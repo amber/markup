@@ -484,7 +484,8 @@ var Markup = function() {
     tr: function(key) {
       return key;
     },
-    parse: parse
+    parse: parse,
+    templates: templates
   };
 
 }();
