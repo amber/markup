@@ -129,12 +129,10 @@ var Markup = function() {
         } else if (e = /^\s*(\|+)/.exec(sub)) {
           i += e[0].length;
           j = string.indexOf(e[1], i);
-          if (j === -1) {
-            return;
-          } else {
-            args.push(parseParagraph(string.substring(i, j)));
-            i = j + e[1].length;
-          }
+          if (j === -1) return;
+
+          args.push(parseParagraph(string.substring(i, j)));
+          i = j + e[1].length;
         } else if (e = /^\s*\[/.exec(sub)) {
           i += e[0].length;
           start = i;
