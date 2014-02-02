@@ -16,7 +16,7 @@
   color: transparent;
   overflow: hidden;
   line-height: 1;
-  background-size: 16px 16px;
+  background-size: 1em 1em;
   vertical-align: text-bottom;
 }
 .markup-emoticon.smile {background-image: url(emoticon/smile.svg)}
