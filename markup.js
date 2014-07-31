@@ -1,4 +1,4 @@
-var Markup = function() {
+(function() {
   'use strict';
 
 
@@ -478,7 +478,7 @@ var Markup = function() {
     return context;
   };
 
-  return {
+  var Markup = {
     tr: function(key) {
       return key;
     },
@@ -486,4 +486,10 @@ var Markup = function() {
     templates: templates
   };
 
-}();
+  if (typeof module !== 'undefined') {
+    module.exports = Markup;
+  } else {
+    this.Markup = Markup;
+  }
+
+}.call(this));
