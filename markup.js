@@ -175,13 +175,13 @@
       if (e = /^\n+/.exec(text)) {
         result = '';
         index += e[0].length;
-      } else if (e = /^\*\s+/.exec(text)) {
+      } else if (e = /^[*-]\s+/.exec(text)) {
         index += e[0].length;
         items = [];
         useParagraph = false;
         for (;;) {
           p = text.substr(index);
-          match = /\n(\n*)\*\s+/.exec(p);
+          match = /\n(\n*)[*-]\s+/.exec(p);
           next = match != null ? match.index : void 0;
           terminator = p.search(/\n\n+(?!    )(?!\n)|$/);
           end = Math.min(terminator, match ? next : p.length);
@@ -192,7 +192,7 @@
             break;
           }
           useParagraph || (useParagraph = match[1]);
-          e = /\n+\*\s+/.exec(p.substr(end));
+          e = /\n+[*-]\s+/.exec(p.substr(end));
           index += e[0].length;
         }
         result = '';
