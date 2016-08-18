@@ -72,7 +72,7 @@
   var LINK = /^(!?)\[([^[\]]+)\]\s*\(([^(\)]*?)\s*((?:"(?:[^"]|\\[\\"])+"|'(?:[^']|\\[\\'])+'|\((?:[^()]|\\[\\()])+\))?)\)/;
   var REFERENCE_LINK = /^(!?)\[([^[\]]+)\]\s*\[([^[\]]*)\]/;
   var AUTOMATIC_LINK = /^<((?:https?|s?ftp|data|file|wss?|about|irc):[^>]*|[0-9a-z-]+(?:\.[0-9a-z\-]+)+\.*(?::\d+)?(?:\/[^>]*)?)>|^((?:(?:https?|s?ftp|data|file|wss?|about|irc):)?\/*(?:localhost|(?:[a-z-]+\.)+[a-z-]{2,})(?::\d+)?(?:\/[^.)\]}'"\s-]+(?:[.)\]}'"-][^.)\]}'"\s-]+)*)?)/;
-  var EMAIL_ADDRESS = /^<((?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|"(?:[^\\"]|\\.)+")@(?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|\[[^[\]\\]*\]))>/i;
+  var EMAIL_ADDRESS = /^<((?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|"(?:[^\\"]|\\.)+")@(?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|\[[^[\]\\]*\]))>|^((?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|"(?:[^\\"]|\\.)+")@(?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|\[[^[\]\\]*\]))/i;
   var TAG = /^<(\/?)(br|del|dd|dl|dt|ins|kbd|sup|sub|mark)>/i;
   var TEMPLATE = /^\{\{\s*/;
 
@@ -389,6 +389,20 @@
           href = e[1] || e[2];
           actual = /^\w+:/.test(href) ? href : 'http://' + href;
           s += "<a href=\"" + htmle(actual) + "\">" + htmle(href) + "</a>";
+        } else if (e = EMAIL_ADDRESS.exec(sub)) {
+          chunked = '';
+          left = e[1] || e[2];
+          while (left) {
+            obfuscator = '';
+            for (j = 3; j--;) {
+              obfuscator += String.fromCharCode(Math.floor(Math.random() * 26 + 97));
+            }
+            chunked += htmle(left.substr(0, 6));
+            chunked += "<span class=markup-email>" + obfuscator + "</span>";
+            left = left.substr(6);
+          }
+          href = htmle((e[1] || e[2]).split('').reverse().join('').replace(/\\/g, '\\\\').replace(/'/g, '\\\''));
+          s += "<a href=\"javascript:window.open('mailto:'+'" + href + "'.split('').reverse().join(''))\">" + chunked + "</a>";
         } else if (e = WORD.exec(sub)) {
           s += leftQuote(e[1]);
           s += rightQuote(e[2]);
@@ -399,20 +413,6 @@
         } else if (e = SPACE.exec(sub)) {
           s += ' ';
           s += leftQuote(e[1]);
-        } else if (e = EMAIL_ADDRESS.exec(sub)) {
-          chunked = '';
-          left = e[1];
-          while (left) {
-            obfuscator = '';
-            for (j = 3; j--;) {
-              obfuscator += String.fromCharCode(Math.floor(Math.random() * 26 + 97));
-            }
-            chunked += htmle(left.substr(0, 6));
-            chunked += "<span class=markup-email>" + obfuscator + "</span>";
-            left = left.substr(6);
-          }
-          href = htmle(e[1].split('').reverse().join('').replace(/\\/g, '\\\\').replace(/'/g, '\\\''));
-          s += "<a href=\"javascript:window.open('mailto:'+'" + href + "'.split('').reverse().join(''))\">" + chunked + "</a>";
         } else if (e = LINK.exec(sub)) {
           label = htmle(e[2]);
           href = e[3];
