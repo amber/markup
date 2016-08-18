@@ -397,8 +397,8 @@
             chunked += "<span class=markup-email>" + String.fromCharCode(Math.floor(Math.random() * 26 + 97)) + "</span>";
             left = left.substr(3);
           }
-          href = htmle((e[1] || e[2]).split('').reverse().join('').replace(/\\/g, '\\\\').replace(/'/g, '\\\''));
-          s += "<a href=\"javascript:window.open('mailto:'+'" + href + "'.split('').reverse().join(''))\">" + chunked + "</a>";
+          href = htmle(JSON.stringify((e[1] || e[2]).split('').reverse().join('')));
+          s += "<a href=\"javascript:window.open('mailto:'+" + href + ".split('').reverse().join(''))\">" + chunked + "</a>";
         } else if (e = WORD.exec(sub)) {
           s += leftQuote(e[1]);
           s += rightQuote(e[2]);
