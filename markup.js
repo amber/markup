@@ -71,7 +71,7 @@
   var NON_EMPHASIS = /^\s+(?:\*+|_+)\s+/;
   var LINK = /^(!?)\[([^[\]]+)\]\s*\(([^(\)]*?)\s*((?:"(?:[^"]|\\[\\"])+"|'(?:[^']|\\[\\'])+'|\((?:[^()]|\\[\\()])+\))?)\)/;
   var REFERENCE_LINK = /^(!?)\[([^[\]]+)\]\s*\[([^[\]]*)\]/;
-  var AUTOMATIC_LINK = /^<((?:https?|s?ftp|data|file|wss?|about|irc):[^>]*|[0-9a-z-]+(\.[0-9a-z\-]+)+\.*(?::\d+)?(?:\/[^>]*)?)>/;
+  var AUTOMATIC_LINK = /^<((?:https?|s?ftp|data|file|wss?|about|irc):[^>]*|[0-9a-z-]+(?:\.[0-9a-z\-]+)+\.*(?::\d+)?(?:\/[^>]*)?)>|^((?:(?:https?|s?ftp|data|file|wss?|about|irc):)?\/*(?:localhost|(?:[a-z-]+\.)+[a-z-]{2,})(?::\d+)?(?:\/[^.)\]}'"\s-]+(?:[.)\]}'"-][^.)\]}'"\s-]+)*)?)/;
   var EMAIL_ADDRESS = /^<((?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|"(?:[^\\"]|\\.)+")@(?:[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+(?:\.[a-z0-9!#$%&'*+\-\/=?^_`{|}~]+)*|\[[^[\]\\]*\]))>/i;
   var TAG = /^<(\/?)(br|del|dd|dl|dt|ins|kbd|sup|sub|mark)>/i;
   var TEMPLATE = /^\{\{\s*/;
@@ -344,7 +344,7 @@
           }
         }
 
-        var e, result, title, href, ref, code, chunked, left, obfuscator;
+        var e, result, title, href, actual, ref, code, chunked, left, obfuscator;
         if (done) {
         } else if (e = LINE_BREAK.exec(sub)) {
           s += '<br>';
@@ -385,6 +385,10 @@
             i = j + e[0].length;
           }
           e = null;
+        } else if (e = AUTOMATIC_LINK.exec(sub)) {
+          href = e[1] || e[2];
+          actual = /^\w+:/.test(href) ? href : 'http://' + href;
+          s += "<a href=\"" + htmle(actual) + "\">" + htmle(href) + "</a>";
         } else if (e = WORD.exec(sub)) {
           s += leftQuote(e[1]);
           s += rightQuote(e[2]);
@@ -426,9 +430,6 @@
           } else {
             s += "<span class=markup-error title=\"" + (htmle(Markup.tr('Missing reference "%"', href))) + "\">" + label + "</span>";
           }
-        } else if (e = AUTOMATIC_LINK.exec(sub)) {
-          href = htmle(e[1]);
-          s += "<a href=\"" + href + "\">" + href + "</a>";
         } else {
           e = null;
           if (!e) {
