@@ -344,7 +344,7 @@
           }
         }
 
-        var e, result, title, href, actual, ref, code, chunked, left, obfuscator;
+        var e, result, title, href, actual, ref, code, chunked, left;
         if (done) {
         } else if (e = LINE_BREAK.exec(sub)) {
           s += '<br>';
