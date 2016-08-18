@@ -393,13 +393,9 @@
           chunked = '';
           left = e[1] || e[2];
           while (left) {
-            obfuscator = '';
-            for (j = 3; j--;) {
-              obfuscator += String.fromCharCode(Math.floor(Math.random() * 26 + 97));
-            }
-            chunked += htmle(left.substr(0, 6));
-            chunked += "<span class=markup-email>" + obfuscator + "</span>";
-            left = left.substr(6);
+            chunked += htmle(left.substr(0, 3));
+            chunked += "<span class=markup-email>" + String.fromCharCode(Math.floor(Math.random() * 26 + 97)) + "</span>";
+            left = left.substr(3);
           }
           href = htmle((e[1] || e[2]).split('').reverse().join('').replace(/\\/g, '\\\\').replace(/'/g, '\\\''));
           s += "<a href=\"javascript:window.open('mailto:'+'" + href + "'.split('').reverse().join(''))\">" + chunked + "</a>";
